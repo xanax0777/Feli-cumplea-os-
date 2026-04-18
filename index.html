@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mi Universo 💖</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #12001f, black);
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+}
+
+/* Canvas galaxia */
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Nombre central */
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 65px;
+  color: #ff66cc;
+  text-shadow: 0 0 20px #ff00cc, 0 0 40px #ff00cc;
+  animation: latido 2s infinite;
+}
+
+/* Mensaje */
+.message {
+  position: absolute;
+  top: 65%;
+  width: 100%;
+  font-size: 22px;
+  opacity: 0;
+  animation: aparecer 4s forwards;
+  animation-delay: 2s;
+}
+
+/* Animaciones */
+@keyframes aparecer {
+  to { opacity: 1; }
+}
+
+@keyframes latido {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="galaxy"></canvas>
+
+<div class="center">Nicole 💖</div>
+<div class="message">Eres mi universo entero ✨</div>
+
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const canvas = document.getElementById("galaxy");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+
+for (let i = 0; i < 700; i++) {
+  stars.push({
+    angle: Math.random() * 2 * Math.PI,
+    radius: Math.random() * 300,
+    speed: Math.random() * 0.003 + 0.0005,
+    size: Math.random() * 2
+  });
+}
+
+function draw() {
+  ctx.fillStyle = "rgba(0,0,0,0.25)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  let cx = canvas.width / 2;
+  let cy = canvas.height / 2;
+
+  stars.forEach(s => {
+    s.angle += s.speed;
+
+    let x = cx + Math.cos(s.angle) * s.radius;
+    let y = cy + Math.sin(s.angle) * s.radius;
+
+    ctx.fillStyle = "#ff66cc";
+    ctx.beginPath();
+    ctx.arc(x, y, s.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+
+// Ajuste en pantalla
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
